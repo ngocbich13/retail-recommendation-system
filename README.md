@@ -2,7 +2,7 @@
 
 End-to-end retail analytics on **32.4M grocery order lines**: a Bronze–Silver–Gold data pipeline, customer segmentation, market-basket rules, segment-level product recommendations, and a Power BI dashboard.
 
-Built during my internship at TMA Solutions Binh Dinh (2026). Dataset: [Instacart Market Basket Analysis](https://www.kaggle.com/competitions/instacart-market-basket-analysis).
+Team project (2 members) built during my internship at TMA Solutions Binh Dinh. Completed in May 2026, published to GitHub in November 2026. Dataset: [Instacart Market Basket Analysis](https://www.kaggle.com/competitions/instacart-market-basket-analysis).
 
 ## Highlights
 
@@ -34,11 +34,11 @@ flowchart LR
 
 | Notebook | Layer | What it does |
 |---|---|---|
-| `01_bronze.ipynb` | Bronze | Reads 6 CSVs with memory-optimized dtypes, validates structure, uploads chunked Parquet to Supabase, writes a run manifest |
-| `02a_eda.ipynb` | Exploration | Exploratory analysis of the raw Instacart data |
-| `02b_silver_master.ipynb` | Silver | Joins 5 tables into `master_df` (row count asserted equal to source), flags first orders, checks duplicates and nulls |
-| `02c_silver_features.ipynb` | Silver | EDA stats, hypothesis tests, 4 feature groups, scaling for clustering and similarity vectors |
-| `03_gold.ipynb` | Gold | K-Means, TF-IDF recommendations, FP-Growth rules, dimension and fact tables for Power BI |
+| `notebooks/01new-bronze.ipynb` | Bronze | Reads 6 CSVs with memory-optimized dtypes, validates structure, uploads chunked Parquet to Supabase, writes a run manifest |
+| `notebooks/02a_eda-on-instacart-data.ipynb` | Exploration | Exploratory analysis of the raw Instacart data |
+| `notebooks/02b-silver-master.ipynb` | Silver | Joins 5 tables into `master_df` (row count asserted equal to source), flags first orders, checks duplicates and nulls |
+| `notebooks/2c-silver-features.ipynb` | Silver | EDA stats, hypothesis tests, 4 feature groups, scaling for clustering and similarity vectors |
+| `notebooks/03ml-gold.ipynb` | Gold | K-Means, TF-IDF recommendations, FP-Growth rules, dimension and fact tables for Power BI |
 
 ## Key findings
 
@@ -61,10 +61,11 @@ flowchart LR
 
 Pages: Overview · Cluster Validation · Segmentation · Association Rules · Recommendation · Campaign Strategy.
 
-<!-- Add 2-3 screenshots, e.g.
-![Overview](images/dashboard_overview.png)
-![Segmentation](images/dashboard_segmentation.png)
--->
+![Overview](images/overview.png)
+![Segmentation](images/segmentation.png)
+![Association Rules](images/association_rules.png)
+
+More pages: [Cluster Validation](images/cluster_validation.png) · [Recommendation](images/recommendation.png) · [Campaign Strategy](images/campaign_strategy.png)
 
 The Power BI file is in `dashboard/Final_Report.pbix`.
 
@@ -75,9 +76,14 @@ The Power BI file is in `dashboard/Final_Report.pbix`.
 - **FP-Growth ran on a random 100K-order sample (3.1%)** at department level to keep memory manageable. Next step: run on full data with a distributed implementation, and at product level.
 - Instacart has no price data, so segment value is measured by behavior, not revenue.
 
-## My contribution
+## Team and my contribution
 
-> TODO: replace with 2-3 lines on exactly what you built (for example: pipeline, features, clustering, dashboard) and what teammates built.
+Team project (2 members). I did most of the end-to-end work:
+
+- **Customer analytics:** EDA, hypothesis tests, 24 behavioral features, K-Means segmentation (5 segments), FP-Growth rules and TF-IDF recommendations
+- **BI:** 9-table star schema and the 6-page Power BI dashboard, including segment insights and campaign strategy
+- **Data pipeline:** Bronze-Silver-Gold architecture on Supabase (Parquet) with validation at each layer
+- **Teammate** ([name](https://github.com/rhyni)): TODO one line on their part, e.g. shared helper modules in `src/`
 
 ## Tech stack
 
@@ -88,17 +94,15 @@ Python (Pandas, NumPy, scikit-learn, SciPy, mlxtend) · SQL · Parquet · Supaba
 1. Get the dataset from Kaggle and attach it to a Kaggle notebook.
 2. Create a Supabase project with three storage buckets: `bronze-data`, `silver-data`, `gold-data`.
 3. Add `SUPABASE_URL` and `SUPABASE_KEY` as Kaggle secrets. Never commit them.
-4. Put the shared helpers (`src/config.py`, `src/io_utils.py`, `src/supabase_utils.py`) in this repo's `src/` folder.
-5. Run the notebooks in order: `01` → `02b` → `02c` → `03`. After each run, copy its `RUN_ID` into the next notebook.
+4. The notebooks import helper modules (`config`, `io_utils`, `supabase_utils`) from `src/` of the team repo [rhyni/retail-recommender-system](https://github.com/rhyni/retail-recommender-system); each notebook clones it in its first cell.
+5. Run the notebooks in order: `01new-bronze` → `02b-silver-master` → `2c-silver-features` → `03ml-gold`. After each run, copy its `RUN_ID` into the next notebook.
 
 ## Repository structure
 
 ```
-notebooks/   01_bronze, 02a_eda, 02b_silver_master, 02c_silver_features, 03_gold
-src/         config.py, io_utils.py, supabase_utils.py
+notebooks/   01new-bronze, 02a_eda-on-instacart-data, 02b-silver-master, 2c-silver-features, 03ml-gold
 dashboard/   Final_Report.pbix
 images/      dashboard screenshots
-docs/        project_report.pdf (optional)
 ```
 
 ## Author
