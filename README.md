@@ -4,18 +4,6 @@ End-to-end retail analytics on **32.4M grocery order lines**: a Bronze–Silver�
 
 Team project (2 members) built during my internship at TMA Solutions Binh Dinh. Completed in May 2026, published to GitHub in November 2026. Dataset: [Instacart Market Basket Analysis](https://www.kaggle.com/competitions/instacart-market-basket-analysis).
 
-## Highlights
-
-| | |
-|---|---|
-| Data processed | 32,434,489 order lines · 3,214,874 orders · 206,209 customers · 49,677 products |
-| Pipeline | Bronze → Silver → Gold on Supabase (Parquet), with row-count, null, duplicate and foreign-key checks at every layer |
-| Features | 24 behavioral features per customer (activity, time habits, product preference, loyalty) |
-| Segmentation | K-Means, 5 customer segments (Elbow + Silhouette + Davies-Bouldin) |
-| Market basket | 213 department-level association rules with FP-Growth (lift up to 2.32) |
-| Recommendations | Top-10 products per segment using TF-IDF scoring |
-| Dashboard | 6-page Power BI report on a 9-table star schema |
-
 ## Business problem
 
 A grocery retailer wants to know **who its customers are, what they buy together, and what to recommend to each group**. This project turns raw order history into customer segments, cross-sell rules and a recommendation list that a marketing team can act on.
@@ -63,9 +51,8 @@ Pages: Overview · Cluster Validation · Segmentation · Association Rules · Re
 
 ![Overview](images/overview.png)
 ![Segmentation](images/segmentation.png)
-![Association Rules](images/association_rules.png)
 
-More pages: [Cluster Validation](images/cluster_validation.png) · [Recommendation](images/recommendation.png) · [Campaign Strategy](images/campaign_strategy.png)
+More pages: [Association Rules](images/association_rules.png) · [Cluster Validation](images/cluster_validation.png) · [Recommendation](images/recommendation.png) · [Campaign Strategy](images/campaign_strategy.png)
 
 The Power BI file is in `dashboard/Final_Report.pbix`.
 
